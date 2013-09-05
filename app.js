@@ -1,36 +1,21 @@
 var express = require("express");
+var mongoose = require("mongoose");
+var schema = require("./schema");
+
+mongoose.connect('mongodb://localhost/test');
+
 var app = express();
-var User = require("./user");
 
-app.configure(function(){
-	app.use(express.methodOverride());
-	app.use(app.router);
-});
+var db = mongoose.connection;
 
-app.configure('development', function(){
-	app.use(express.errorHandler({dumpExceptions : true, showStack : true}));
-});
+db.on('error', console.error.bind(console, 'connection error:'));
 
-app.configure('production', function(){
-	app.use(express.errorHandler());
-});
+db.once('open', function callback () {
+	app.get('/', );
+	app.get('/login',);
+	app.get('/register',);
 
-app.get('/', function(req, res){
-	// インスタンス生成
-	var u = new User();
-	u.name = 'hoge';
-	u.age = '49';
-	//保存
-	u.save();
-
-	console.log("test");
-
-	// 読み出し & ブラウザへデータ送信
-	User.find({}, function(err, items){
-		// find()の結果をブラウザに出力
-		res.send(JSON.stringify(items));
-	});	
-});
-
-console.log('run server. port 3000...');
-app.listen(3000);
+	app.listen(3000);
+	console.log('run server. port 3000...');
+	console.log('Enter [ctrl]+C to stop server.');
+}
