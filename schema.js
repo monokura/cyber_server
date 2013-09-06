@@ -8,20 +8,22 @@ var userSchema = mongoose.Schema({
 
 exports.User = mongoose.model('User', userSchema);
 
-var groopScema = mongoose.Schema({
+var groopSchema = mongoose.Schema({
 	name : String,
     	intro : String,
-    	menber : [String],
-    	entry_menber : [String],
-    	flashcard : [Number],
+    	member : [String],
+    	pass : String,	
+		entry_member : [String],
+    	flashcard : [{name : String,
+						id : Number,],
 })
 
 exports.Groop = mongoose.model('Groop', groopSchema)
 
 var flashcardSchema = mongoose.Schema({
-	id : Number
-	word : [{English : String},
-    		{Japanese : String},]
+	id : Number,
+	word : [{english : String},
+    		{japanese : String},]
 })
 
-exports.Flashcard = mongoose.model('Flashcard', flashcardScema)
+exports.Flashcard = mongoose.model('Flashcard', flashcardSchema)
