@@ -72,7 +72,8 @@ db.once('open', function callback () {
 		var word = req.param('word');
 		var dic = db.model("Dictionary");
 		console.log("word :" + word);
-		dic.find({'eng':word}, function(err, result){
+		var searchWord = "^" + word;
+		dic.find({'eng':{$regex:searchWord}}, function(err, result){
 			//console.log("search result : " + result);
 			if(word == null){
 				res.send({'exist':false});
