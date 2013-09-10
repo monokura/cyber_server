@@ -25,7 +25,8 @@ db.once('open', function callback () {
 		}
 
 		var User = schema.User;
-		var search = {"name":name,"pass": pass};
+		var search = {'name':name,'pass': pass};
+
 		User.findOne(search,function(err, user){
 			console.log(user);
 			if(err){
@@ -35,11 +36,11 @@ db.once('open', function callback () {
 			if(user == null){
 				// name or pass is different
 				console.log("name or pass is wrong");
-				res.send("name or pass is wrong");
+				res.send({'error':true,'message':"name or pass is wrong"});
 			}else{
 				// login success
 				console.log("login success : " + name);
-				res.send("login : " + name);
+				res.send({'error':false, 'name':name});
 			}
 		});
 	})
@@ -58,15 +59,58 @@ db.once('open', function callback () {
 				newUser.name = name;
 				newUser.pass = pass;
 				newUser.save();
-				res.send("create : " + name)
+				res.send({'error':false,'name':name});
 			}else{
 				// same name is found
 				console.log("This name is used : " + name);
-				res.send("same name is found");
+				res.send({'error':true,'message':"same name is found"});
 			}
 		})
 	});
 
+	app.get('/searchWord',function(req, res){
+		var word = req.param('word');
+		var dic = db.model("Dictionary");
+		console.log("word :" + word);
+		dic.find({'eng':word}, function(err, result){
+			//console.log("search result : " + result);
+			if(word == null){
+				res.send({'exist':false});
+			}else{
+				var tmp = JSON.stringify(result);
+				
+				res.send({'exist':true,'word':tmp});
+			}
+		});
+	});
+
+	app.get('/searchGroop', function(req, res){
+		var name = req.param('name');
+		var groops = db.model('Groop');
+		groops.find({'name':"*"+name+"*"}, function(err, groop){
+			console.log("search result : " + groop);
+			if(groop == null){
+				send({'exist':false});
+			}else{
+				var tmp = JSON.stringify(groop);
+				send({'exist':true,'word':groop});
+			}
+		});
+
+	});
+
+	app.get('/searchFlashcard', function(req, res){
+		var name = req.param('name');
+		var flashcards = db.model('Flashcard');
+		flashcards.find({'name':"*"+name+"*"}, function(err, flashcard){
+			console.log("search result : " + flashcard);
+			if(flashcard == null){
+				send({'exist':false});
+			}else{
+				send({'exist':true,'flashcard':flashcard});
+			}
+		})
+	});
 
 	app.listen(3000);
 	console.log('run server. port 3000...');
