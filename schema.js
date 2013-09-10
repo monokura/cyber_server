@@ -5,8 +5,10 @@ var mongoose = require('mongoose');
 var userSchema = mongoose.Schema({
 	name : String,
     pass : String,
-	flashcards : [Number],
-	groop:[String],
+	flashcards : [{name:String,
+					id:Number}],
+	groop:[{name:String,
+			id:Number}],
 });
 
 userSchema.methods.addFlashcard = function(newFlashcard){
@@ -17,11 +19,10 @@ exports.User = mongoose.model('User', userSchema);
 
 //---------------groop----------------
 var groopSchema = mongoose.Schema({
+	id : Number,
 	name : String,
 	intro : String,
-	member : [String],
-	pass : String,	
-	entry_member : [String],
+	member : [String],	
 	flashcards : {name : String,
 					id : Number},
 })
@@ -37,6 +38,7 @@ exports.Groop = mongoose.model('Groop', groopSchema)
 var flashcardSchema = mongoose.Schema({
 	id : Number,
 	name : String,
+	intro: String,
 	master : String,
 	words : {english : String,
     		japanese : String}
