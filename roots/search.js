@@ -14,7 +14,7 @@ exports.word = function(req, res){
 			res.send({'exist':false});
 		}else{
 			var tmp = JSON.stringify(result);
-			res.send({'exist':true,'word':tmp});
+			res.send({'exist':true,'word':result});
 		}
 	});
 }
