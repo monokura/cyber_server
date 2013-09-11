@@ -56,7 +56,7 @@ var flashcardSchema = mongoose.Schema({
 	id : String,
 	intro: String,
 	master : String,
-	groop : [Number],
+	groop : [String],
 	level : Number,
 	update : Number,
 	words : String,
