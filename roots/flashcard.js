@@ -4,17 +4,29 @@ var Groop = Schema.Groop;
 var User = Schema.User;
 
 // 単語帳作成
-// ユーザーと単語帳は空
 exports.create = function(req, res){
 	var name = req.param("name");
 	var intro = req.param("intro");
 	var master = req.param("master");
+	var groop = req.param("groop");
+	var level = req.param("level");
+	var update = 0; // temp
+	var words = req.param("words");
 
 	var newFlashcard = new Flashcard();
-	newFlashcard.name = name;
-	newFlashcard.intro = intro;
-	newFlashcard.master = master;
-	newFlashcard.save();
+	
+	console.log("name : " + name);
+	console.log("intro : " + intro);
+	console.log("master : " + master);
+	console.log("groop : " + groop);
+	console.log("level : " + level);
+	console.log("update : " + update);
+	console.log("words : " + words);
+
+	//newFlashcard.name = name;
+	//newFlashcard.intro = intro;
+	//newFlashcard.master = master;
+	//newFlashcard.save();
 }
 
 // 他人の単語帳を登録する

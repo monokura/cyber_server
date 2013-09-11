@@ -58,12 +58,12 @@ var flashcardSchema = mongoose.Schema({
 	groop : [Number],
 	level : Number,
 	update : Number,
-	words : {english : String,
-    		japanese : String}
+	words : {eng : String,
+    		jap : String}
 })
 
 flashcardSchema.methods.addWord = function(eng,jap){
-	var pair = {'english':eng,'japanese':jap};
+	var pair = {'eng':eng,'jap':jap};
 	this.words.push(pair);
 }
 
