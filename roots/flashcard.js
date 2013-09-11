@@ -29,9 +29,7 @@ exports.create = function(req, res){
 	newFlashcard.groop = groop;
 	newFlashcard.level = level;
 	newFlashcard.update = date;
-	for(var i =0; i < words.length;i++){
-		newFlashcard.addWord(words.eng , words.jap);
-	}
+	newFlashcard.words = words;
 	newFlashcard.save();
 	res.send({error:true,message:"成功したよ"});
 }
