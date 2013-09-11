@@ -55,7 +55,7 @@ exports.addToGroops = function(req, res){
 
 // グループ情報に単語帳を登録する
 function addToGroop(groopid, flashcardid, flashcardname){
-	Groop.find({_id,groopid}, function(err, groop){
+	Groop.find({_id:groopid}, function(err, groop){
 		groop.addFlashcard();	
 	});
 }
@@ -75,11 +75,11 @@ exports.defectFromGroop = function(req,res){
 	var groopid = req.param("groopid");
 	var flashcardid = req.param("flashcardid");
 
-	Groop.find({_id, groopid}, function(err,groop){
+	Groop.find({_id:groopid}, function(err,groop){
 		groop.removeFlashcard(flashcardid);	
 	});
 
-	Flashcard.find({_id,flashcardid},function(err, flashcard){
+	Flashcard.find({_id:flashcardid},function(err, flashcard){
 		flashcard.removeGroop(groopid);	
 	})
 }
