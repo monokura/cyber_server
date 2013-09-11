@@ -5,23 +5,39 @@ var mongoose = require('mongoose');
 var userSchema = mongoose.Schema({
 	name : String,
     pass : String,
-	flashcards : [{name:String,
-					id:Number}],
-	groop:[{name:String,
-			id:Number}],
+	flashcards : {id:Number,
+				name:String},
+	groops:{id:Number,
+			name:String},
 });
 
 userSchema.methods.addFlashcard = function(newFlashcard){
 	this.flashcards.push(newFlashcard);
 }
 
+userSchema.methods.addGroop = function(newGroop){
+	this.groop.push(newGroop);
+}
+
+userSchema.methods.removeFlashcard = function(flashcardid){
+	User.flashcards.remove({id:flashcardid},function(err){
+		// 削除完了	
+	});
+}
+
+userSchema.methods.removeGroop = function(groopid){
+	User.groops.remove({id:groopid}, function(err){
+		// 削除完了
+	});
+}
+
 exports.User = mongoose.model('User', userSchema);
 
 //---------------groop----------------
 var groopSchema = mongoose.Schema({
-	id : Number,
 	name : String,
 	intro : String,
+	master: String,
 	member : [String],	
 	flashcards : {name : String,
 					id : Number},
@@ -36,10 +52,12 @@ exports.Groop = mongoose.model('Groop', groopSchema)
 
 //-------------flashcard--------------
 var flashcardSchema = mongoose.Schema({
-	id : Number,
 	name : String,
 	intro: String,
 	master : String,
+	groop : [Number],
+	level : Number,
+	update : Number,
 	words : {english : String,
     		japanese : String}
 })
@@ -48,6 +66,15 @@ flashcardSchema.methods.addWord = function(eng,jap){
 	var pair = {'english':eng,'japanese':jap};
 	this.words.push(pair);
 }
+
+flashcardSchema.methods.get = function(){
+
+}
+
+flashcardSchema.methods.defect = function(){
+	
+}
+
 exports.Flashcard = mongoose.model('Flashcard', flashcardSchema)
 
 //-------------dictionary------------
