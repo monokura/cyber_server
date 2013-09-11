@@ -30,7 +30,8 @@ exports.create = function(req, res){
 	newFlashcard.level = level;
 	newFlashcard.update = date;
 	for(var i =0; i < words.length;i++){
-		newFlashcard.words.addWord(words.eng, words.jap);
+	    var tmp = {eng:words.eng , jap:words.jap};
+		newFlashcard.words.push(tmp);
 	}
 	newFlashcard.save();
 	res.send({error:true,message:"成功したよ"});
