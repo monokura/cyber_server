@@ -26,7 +26,10 @@ exports.create = function(req, res){
 	newFlashcard.id = name + date;
 	newFlashcard.intro = intro;
 	newFlashcard.master = master;
-	newFlashcard.groop = groop;
+    newFlashcard.groop = new Array();
+    for(var i = 0;i < groop.length;i++){
+	newFlashcard.groop.push(groop[i]);
+    }
 	newFlashcard.level = level;
 	newFlashcard.update = date;
 	newFlashcard.words = words;

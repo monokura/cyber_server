@@ -8,7 +8,7 @@ var userSchema = mongoose.Schema({
 	flashcards : {id:Number,
 				name:String},
 	groops:{id:Number,
-			name:String},
+			name:String}
 });
 
 userSchema.methods.addFlashcard = function(newFlashcard){
@@ -40,7 +40,7 @@ var groopSchema = mongoose.Schema({
 	master: String,
 	member : [String],	
 	flashcards : {name : String,
-					id : Number},
+					id : Number}
 })
 
 groopSchema.methods.addFlashcard = function(name , id){
@@ -59,7 +59,7 @@ var flashcardSchema = mongoose.Schema({
 	groop : [String],
 	level : Number,
 	update : Number,
-	words : String,
+	words : String
 })
 
 //flashcardSchema.methods.addWord = function(eng,jap){
@@ -80,7 +80,7 @@ exports.Flashcard = mongoose.model('Flashcard', flashcardSchema)
 //-------------dictionary------------
 var dictionarySchema = mongoose.Schema({
 	'eng': String,
-	'jap': String,
+	'jap': String
 });
 
 exports.Dictionary = mongoose.model('Dictionary', dictionarySchema);
