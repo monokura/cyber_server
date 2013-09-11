@@ -30,8 +30,13 @@ exports.create = function(req, res){
 	newFlashcard.level = level;
 	newFlashcard.update = date;
 	newFlashcard.words = words;
-	newFlashcard.save();
-	res.send({error:true,message:"成功したよ"});
+	newFlashcard.save(function(err){
+		if(err != null){
+			console.log(err);
+		}else{
+			res.send({error:true,message:"成功したよ"});
+		}
+	});
 }
 
 // 他人の単語帳を登録する
