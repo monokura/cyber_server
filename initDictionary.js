@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 mongoose.connect('mongodb://localhost/ca_app');
 
-var Schema = require("./Schema");
+var Schema = require("./schema");
 
 //var DicSchema = mongoose.Schema({
 //	'eng': String,
