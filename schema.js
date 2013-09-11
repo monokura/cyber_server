@@ -60,7 +60,7 @@ var flashcardSchema = mongoose.Schema({
 	level : Number,
 	update : Number,
 	words : [{eng : String,
-    		jap : String},],
+    		jap : String}],
 })
 
 flashcardSchema.methods.addWord = function(eng,jap){
