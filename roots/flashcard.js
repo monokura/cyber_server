@@ -10,11 +10,9 @@ exports.create = function(req, res){
 	var master = req.body.master;
 	var groop = req.body.groop;
 	var level = req.body.level;
-	var date = req.body.date; // temp
+	var date = req.body.date;
 	var words = req.body.words;
 
-	var newFlashcard = new Flashcard();
-	
 	console.log("name : " + name);
 	console.log("intro : " + intro);
 	console.log("master : " + master);
@@ -23,10 +21,20 @@ exports.create = function(req, res){
 	console.log("date : " + date);
 	console.log("words : " + words);
 
-	//newFlashcard.name = name;
-	//newFlashcard.intro = intro;
-	//newFlashcard.master = master;
-	//newFlashcard.save();
+	var newFlashcard = new Flashcard();
+	newFlashcard.name = name;
+	newFlashcard.id = name + date;
+	newFlashcard.intro = intro;
+	newFlashcard.master = master;
+	for(var i = 0;i < groop.length;i++){
+		newFlashcard.groop.push(groop[i]);
+	}
+	newFlashcard.level = level;
+	newFlashcard.update = date;
+	for(var i = 0;i < words.length;i++){
+		newFlashcard.addWord(words[i].eng, words[i].jap);
+	}
+	newFlashcard.save();
 	res.send({error:true,message:"成功したよ"});
 }
 

@@ -24,6 +24,7 @@ db.once('open', function callback () {
 	app.get('/searchFlashcard', search.flashcard);
 
 	app.get('/createGroop', groop.create);
+	//app.get('createFlashcard', flashcard.create);
 	app.post('/createFlashcard', flashcard.create);
 	app.listen(3000);
 	console.log('run server. port 3000...');

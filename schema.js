@@ -53,6 +53,7 @@ exports.Groop = mongoose.model('Groop', groopSchema)
 //-------------flashcard--------------
 var flashcardSchema = mongoose.Schema({
 	name : String,
+	id : String,
 	intro: String,
 	master : String,
 	groop : [Number],
