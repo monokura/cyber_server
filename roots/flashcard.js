@@ -5,13 +5,13 @@ var User = Schema.User;
 
 // 単語帳作成
 exports.create = function(req, res){
-	var name = req.param("name");
-	var intro = req.param("intro");
-	var master = req.param("master");
-	var groop = req.param("groop");
-	var level = req.param("level");
-	var date = req.param("date"); // temp
-	var words = req.param("words");
+	var name = req.body.name;
+	var intro = req.body.intro;
+	var master = req.body.master;
+	var groop = req.body.groop;
+	var level = req.body.level;
+	var date = req.body.date; // temp
+	var words = req.body.words;
 
 	var newFlashcard = new Flashcard();
 	
