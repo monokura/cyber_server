@@ -31,9 +31,11 @@ exports.create = function(req, res){
 	newFlashcard.update = date;
 	newFlashcard.words = words;
 	newFlashcard.save(function(err){
+		console.log("save result is ...");
 		if(err != null){
-			console.log(err);
+			console.log("err");
 		}else{
+			console.log("success");
 			res.send({error:true,message:"成功したよ"});
 		}
 	});
