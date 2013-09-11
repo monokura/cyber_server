@@ -10,7 +10,7 @@ exports.create = function(req, res){
 	var master = req.param("master");
 	var groop = req.param("groop");
 	var level = req.param("level");
-	var update = 0; // temp
+	var date = req.param("date"); // temp
 	var words = req.param("words");
 
 	var newFlashcard = new Flashcard();
@@ -20,7 +20,7 @@ exports.create = function(req, res){
 	console.log("master : " + master);
 	console.log("groop : " + groop);
 	console.log("level : " + level);
-	console.log("update : " + update);
+	console.log("date : " + date);
 	console.log("words : " + words);
 
 	//newFlashcard.name = name;
