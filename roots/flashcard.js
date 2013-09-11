@@ -33,14 +33,18 @@ exports.create = function(req, res){
 	newFlashcard.groop = groopArray;
 	newFlashcard.level = level;
 	newFlashcard.update = date;
-	newFlashcard.words = words;
+	var wordArray = new Array();
+	for(var i = 0;i < words.length;i++){
+		wordArray.push({eng:words[i].eng, jap:words[i].jap});
+	}
+	newFlashcard.words = wordArray;
 	newFlashcard.save(function(err){
 		console.log("save result is ...");
 		if(err != null){
 			console.log("err");
 		}else{
 			console.log("success");
-			res.send({error:true,message:"成功したよ"});
+			res.send({error:false,message:"成功したよ"});
 		}
 	});
 }
