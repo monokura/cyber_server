@@ -27,6 +27,7 @@ exports.create = function(req, res){
 	//newFlashcard.intro = intro;
 	//newFlashcard.master = master;
 	//newFlashcard.save();
+	res.send({error:true,message:"成功したよ"});
 }
 
 // 他人の単語帳を登録する
