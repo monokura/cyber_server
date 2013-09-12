@@ -40,7 +40,7 @@ var groopSchema = mongoose.Schema({
 	master: String,
 	member : [String],	
 	flashcards : {name : String,
-					id : Number}
+					id : String}
 })
 
 groopSchema.methods.addFlashcard = function(name , id){

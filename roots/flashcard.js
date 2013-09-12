@@ -8,10 +8,11 @@ exports.create = function(req, res){
 	var name = req.body.name;
 	var intro = req.body.intro;
 	var master = req.body.master;
-	var groop = req.body.groop;
+	var groop = JSON.parse(req.body.groop);
 	var level = req.body.level;
 	var date = req.body.date;
-	var words = req.body.words;
+	var words = JSON.parse(req.body.words);
+	var id = name + date;
 
 	console.log("name : " + name);
 	console.log("intro : " + intro);
@@ -23,7 +24,7 @@ exports.create = function(req, res){
 
 	var newFlashcard = new Flashcard();
 	newFlashcard.name = name;
-	newFlashcard.id = name + date;
+	newFlashcard.id = id;
 	newFlashcard.intro = intro;
 	newFlashcard.master = master;
     var groopArray = new Array();
@@ -34,19 +35,27 @@ exports.create = function(req, res){
 	newFlashcard.level = level;
 	newFlashcard.update = date;
 	var wordArray = new Array();
-	console.log("=====================");
-	for(var i = 0;i < words.length;i++){
-		wordArray.push({'eng':words[i].eng, 'jap':words[i].jap});
-		console.log(words[i]["eng"] + ":" + words[i]["jap"]);
+
+	for (var index in words) {
+	    wordArray.push({'eng':words[index]['eng'], 'jap':words[index]['jap']});
+	    console.log(words[index]["eng"] + ":" + words[index]["jap"]);
 	}
 	newFlashcard.words = wordArray;
 	newFlashcard.save(function(err){
 		console.log("save result is ...");
 		if(err != null){
 			console.log("err");
+			res.send({error:true,message:err});
 		}else{
 			console.log("success");
-			res.send({error:false,message:"成功したよ"});
+			
+			//  グループに単語帳を登録
+			for(var index in groopArray){
+				Groop.findOne({_id:groopArray[index]},function(err, gr){
+					gr.addFlashcard(name, id);	
+				});
+			}
+			res.send({error:false});
 		}
 	});
 }
