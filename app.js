@@ -8,7 +8,7 @@ app.use(express.bodyParser());
 
 var auth = require("./roots/auth");
 var search = require("./roots/search");
-var groop = require("./roots/groop");
+var group = require("./roots/group");
 var flashcard = require("./roots/flashcard");
 
 var db = mongoose.connection;
@@ -20,10 +20,12 @@ db.once('open', function callback () {
 	app.get('/register', auth.register);
 
 	app.get('/searchWord', search.word);
-	app.get('/searchGroop', search.groop);
+	app.get('/searchGroup', search.group);
 	app.get('/searchFlashcard', search.flashcard);
+	app.get('/searchAllGroup', search.allGroup);
 
-	app.get('/createGroop', groop.create);
+
+	app.get('/createGroup', group.create);
 	//app.get('createFlashcard', flashcard.create);
 	app.post('/createFlashcard', flashcard.create);
 	app.listen(3000);

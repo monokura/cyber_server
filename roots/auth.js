@@ -29,9 +29,19 @@ exports.login = function(req, res){
 		}else{
 			// login success
 			console.log("login success : " + name);
-			res.send({'error':false, 'name':name});
+			//res.send({'error':false, 'user':user});
+			updateLocaleData(name, res);
 		}
 	})
+}
+
+function updateLocaleData(name , res){
+	User.findOne({'name':name}, function(err, user){
+	var username = user.name;
+	var userFlashcards = user.flashcards;
+	var userGroups = user.groups;
+	res.send({'error':false,'name':username,'flashcards':userFlashcards,'groups':userGroups});
+	});
 }
 
 exports.register = function(req, res){
@@ -42,11 +52,13 @@ exports.register = function(req, res){
 	User.findOne(search,function(err, user){
 		console.log(user);
 		if(user == null){
-			// name os uniqe
+			// name is uniqe
 			console.log("create account :" + name );
 			var newUser = new User();
 			newUser.name = name;
 			newUser.pass = pass;
+			newUser.flashcards = new Array();
+			newUser.groups = new Array();
 			newUser.save();
 			res.send({'error':false,'name':name});
 		}else{

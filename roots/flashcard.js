@@ -1,6 +1,6 @@
 var Schema = require("../schema");
 var Flashcard = Schema.Flashcard;
-var Groop = Schema.Groop;
+var Group = Schema.Group;
 var User = Schema.User;
 
 // 単語帳作成
@@ -8,7 +8,7 @@ exports.create = function(req, res){
 	var name = req.body.name;
 	var intro = req.body.intro;
 	var master = req.body.master;
-	var groop = JSON.parse(req.body.groop);
+	var group = JSON.parse(req.body.group);
 	var level = req.body.level;
 	var date = req.body.date;
 	var words = JSON.parse(req.body.words);
@@ -17,7 +17,7 @@ exports.create = function(req, res){
 	console.log("name : " + name);
 	console.log("intro : " + intro);
 	console.log("master : " + master);
-	console.log("groop : " + groop);
+	console.log("group : " + group);
 	console.log("level : " + level);
 	console.log("date : " + date);
 	console.log("words : " + words);
@@ -27,11 +27,11 @@ exports.create = function(req, res){
 	newFlashcard.id = id;
 	newFlashcard.intro = intro;
 	newFlashcard.master = master;
-    var groopArray = new Array();
-    for(var i = 0;i < groop.length;i++){
-		groopArray.push(groop[i]);
+    var groupArray = new Array();
+    for(var i = 0;i < group.length;i++){
+		groupArray.push(group[i]);
     }
-	newFlashcard.groop = groopArray;
+	newFlashcard.group = groupArray;
 	newFlashcard.level = level;
 	newFlashcard.update = date;
 	var wordArray = new Array();
@@ -48,14 +48,20 @@ exports.create = function(req, res){
 			res.send({error:true,message:err});
 		}else{
 			console.log("success");
-			
-			//  グループに単語帳を登録
-			for(var index in groopArray){
-				Groop.findOne({_id:groopArray[index]},function(err, gr){
-					gr.addFlashcard(name, id);	
-				});
-			}
-			res.send({error:false});
+			//  ユーザーに単語帳を追加
+			User.update({name:master},{$push:{flashcards:{'id':id,'name':name}}}, function(err){
+				//  グループに単語帳を登録
+				for(var index in groupArray){
+					Group.findOne({_id:groupArray[index]},function(err, gr){
+						if(gr != null){
+							gr.addFlashcard(name, id);
+						}	
+					});
+				}
+				res.send({error:false});
+
+			})
+
 		}
 	});
 }
@@ -74,20 +80,20 @@ exports.addToUser = function(req, res){
 }
 
 // 一つの単語帳を複数のグループに同時に登録
-exports.addToGroops = function(req, res){
+exports.addToGroups = function(req, res){
 	var flashcardid = req.param('flashcardid');
 	var flashcardname = req.param('flashcardname');
-	var groopArray = req.param('groopArray');	// グループIDの配列
+	var groupArray = req.param('groupArray');	// グループIDの配列
 
-	for(var i = 0;i < groopArray.length;i++){
-		addToGroop(groopArray[i], flashcardid, flashcardname);
+	for(var i = 0;i < groupArray.length;i++){
+		addToGroup(groupArray[i], flashcardid, flashcardname);
 	}
 }
 
 // グループ情報に単語帳を登録する
-function addToGroop(groopid, flashcardid, flashcardname){
-	Groop.find({_id:groopid}, function(err, groop){
-		groop.addFlashcard();	
+function addToGroup(groupid, flashcardid, flashcardname){
+	Group.find({_id:groupid}, function(err, group){
+		group.addFlashcard();	
 	});
 }
 
@@ -102,15 +108,15 @@ exports.defectFromUser = function(req, res){
 }
 
 // グループ情報から単語帳を削除する
-exports.defectFromGroop = function(req,res){
-	var groopid = req.param("groopid");
+exports.defectFromGroup = function(req,res){
+	var groupid = req.param("groupid");
 	var flashcardid = req.param("flashcardid");
 
-	Groop.find({_id:groopid}, function(err,groop){
-		groop.removeFlashcard(flashcardid);	
+	Group.find({_id:groupid}, function(err,group){
+		group.removeFlashcard(flashcardid);	
 	});
 
 	Flashcard.find({_id:flashcardid},function(err, flashcard){
-		flashcard.removeGroop(groopid);	
+		flashcard.removeGroup(groupid);	
 	})
 }

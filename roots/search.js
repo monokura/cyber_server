@@ -1,7 +1,7 @@
 var Schema = require("../schema");
 
 var User = Schema.User;
-var Groop = Schema.Groop;
+var Group = Schema.Group;
 var Flashcard = Schema.Flashcard;
 var Dictionary = Schema.Dictionary;
 
@@ -19,20 +19,33 @@ exports.word = function(req, res){
 	});
 }
 
-exports.groop = function(req, res){
+exports.group = function(req, res){
 	var name = req.param('name');
 	var searchWord = "^" + name;
-	Groop.find({'name':{$regex:searchWord}}, function(err, groop){
-		console.log("search result : " + groop);
-		if(groop == null){
-			send({'exist':false});
+	Group.find({'name':{$regex:searchWord}}, function(err, group){
+		console.log("search result : " + group);
+		if(group == null){
+			res.send({'exist':false});
 		}else{
-			var tmp = JSON.stringify(groop);
-			send({'exist':true,'word':tmp});
+			var tmp = JSON.stringify(group);
+			res.send({'exist':true,'word':group});
 		}
 	});
 
 }
+
+exports.allGroup = function(req, res){
+	Group.find().exec( function(err, group){
+		console.log("search result : " + group);
+		if(group == null){
+			res.send({'exist':false});
+		}else{
+			var tmp = JSON.stringify(group);
+			res.send({'exist':true,'groups':group});
+		}
+	});
+}
+
 
 exports.flashcard = function(req, res){
 	var name = req.param('name');
@@ -40,10 +53,10 @@ exports.flashcard = function(req, res){
 	Flashcard.find({'name':{$regex:searchWord}}, function(err, flashcard){
 		console.log("search result : " + flashcard);
 		if(flashcard == null){
-			send({'exist':false});
+			res.send({'exist':false});
 		}else{
 			var tmp = JSON.Stringify(flashcard);
-			send({'exist':true,'flashcard':tmp});
+			res.send({'exist':true,'flashcard':tmp});
 		}
 	})
 }
