@@ -63,10 +63,10 @@ var flashcardSchema = mongoose.Schema({
 			jap:String}]
 })
 
-//flashcardSchema.methods.addWord = function(eng,jap){
-//	var pair = {'eng':eng,'jap':jap};
-//	this.words.push(pair);
-//}
+flashcardSchema.methods.addWord = function(eng,jap){
+	var pair = {'eng':eng,'jap':jap};
+	this.words.push(pair);
+}
 
 flashcardSchema.methods.get = function(){
 
