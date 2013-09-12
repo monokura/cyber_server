@@ -19,6 +19,7 @@ db.once('open', function callback () {
 	app.get('/login', auth.login);
 	app.get('/register', auth.register);
 
+	app.get('/searchUser', search.user);
 	app.get('/searchWord', search.word);
 	app.get('/searchGroup', search.group);
 	app.get('/searchFlashcard', search.flashcard);

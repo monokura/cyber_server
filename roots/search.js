@@ -5,6 +5,17 @@ var Group = Schema.Group;
 var Flashcard = Schema.Flashcard;
 var Dictionary = Schema.Dictionary;
 
+exports.user = function(req, res){
+	var name = req.param('name');
+	User.findOne({name:name}, function(err, user){
+		if(user != null){
+			res.send({error:true, message:"ユーザーが見つかりません"})		
+		}else{
+			res.send({'error':false,'name':user.name,'flashcards':user.flashcards,'groops':user.groops})
+		}
+	});
+}
+
 exports.word = function(req, res){
 	var word = req.param('word');
 	var searchWord = "^" + word;
