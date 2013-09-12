@@ -37,7 +37,7 @@ exports.create = function(req, res){
 	console.log("=====================");
 	for(var i = 0;i < words.length;i++){
 		wordArray.push({'eng':words[i].eng, 'jap':words[i].jap});
-		console.log(words[i][eng] + ":" + words[i][jap]);
+		console.log(words[i]["eng"] + ":" + words[i]["jap"]);
 	}
 	newFlashcard.words = wordArray;
 	newFlashcard.save(function(err){
