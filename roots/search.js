@@ -10,7 +10,7 @@ exports.user = function(req, res){
 	User.findOne({name:name}, function(err, user){
 		console.log("err : " + err);
 		console.log("user: " + user);
-		if(user != null){
+		if(user == null){
 			res.send({error:true, message:"ユーザーが見つかりません"})		
 		}else{
 			res.send({'error':false,'name':user.name,'flashcards':user.flashcards,'groops':user.groops})
