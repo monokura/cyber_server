@@ -8,6 +8,8 @@ var Dictionary = Schema.Dictionary;
 exports.user = function(req, res){
 	var name = req.param('name');
 	User.findOne({name:name}, function(err, user){
+		console.log("err : " + err);
+		console.log("user: " + user);
 		if(user != null){
 			res.send({error:true, message:"ユーザーが見つかりません"})		
 		}else{
